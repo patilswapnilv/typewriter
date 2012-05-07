@@ -1,10 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="novoda.android.typewriter">
+          package="novoda.android.typewriter">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <application
-        android:icon="@drawable/android:star_big_on"
-        android:label="@string/app_name"
-        android:debuggable="true">
+            android:icon="@drawable/android:star_big_on"
+            android:label="@string/app_name"
+            android:debuggable="true">
 
         <activity android:label="@string/app_name" android:name=".TypedActivity">
             <intent-filter>
@@ -15,4 +16,5 @@
     </application>
 
     <uses-sdk android:minSdkVersion="14"/>
+
 </manifest>
