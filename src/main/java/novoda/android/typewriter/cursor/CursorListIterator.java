@@ -1,11 +1,22 @@
 package novoda.android.typewriter.cursor;
 
+import android.database.Cursor;
+
 import java.util.ListIterator;
 
 public class CursorListIterator<T> implements ListIterator<T> {
 
+    private final Cursor cur;
+    private final CursorMarshaller<T> marshaller;
+
+    public CursorListIterator(Cursor cur, CursorMarshaller<T> marshaller) {
+        this.cur = cur;
+        this.marshaller = marshaller;
+    }
+
     @Override
     public void add(T t) {
+        throw new UnsupportedOperationException("no modification support");
     }
 
     @Override
@@ -40,9 +51,11 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public void remove() {
+        throw new UnsupportedOperationException("no modification support");
     }
 
     @Override
     public void set(T t) {
+        throw new UnsupportedOperationException("no modification support");
     }
 }

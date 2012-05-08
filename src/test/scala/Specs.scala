@@ -1,6 +1,5 @@
 import android.database.MatrixCursor
 import novoda.android.typewriter.cursor.{TypedCursor, MyObject, CursorMarshaller}
-import org.omg.SendingContext.RunTime
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.WordSpec
 
@@ -29,6 +28,14 @@ class CursorMarshallerSpec extends WordSpec with ShouldMatchers with RoboSpecs {
   }
 }
 
+class CursorListIteratorSpec extends TypeWriterSpec {
+  "A cursor list iterator" should {
+    "give correct size" in {
+
+    }
+  }
+}
+
 class TypedCursorSpec extends WordSpec with ShouldMatchers with RoboSpecs {
   "a typed cursor" should {
     "produce a correct type" in {
@@ -38,3 +45,5 @@ class TypedCursorSpec extends WordSpec with ShouldMatchers with RoboSpecs {
     }
   }
 }
+
+trait TypeWriterSpec extends WordSpec with ShouldMatchers with RoboSpecs

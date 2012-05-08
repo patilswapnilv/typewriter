@@ -8,7 +8,7 @@ import android.util.Log;
 import novoda.android.typewriter.cursor.CursorMarshaller;
 import novoda.android.typewriter.cursor.TypedCursor;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class TypedActivity extends Activity {
     @Override
@@ -20,23 +20,34 @@ public class TypedActivity extends Activity {
 
         long now = System.currentTimeMillis();
         while (cursor.moveToNext()) {
-            cursor.getString(cursor.getColumnIndexOrThrow("display_name"));
+            Log.i("TEST", cursor.getString(cursor.getColumnIndexOrThrow("display_name")));
         }
         Log.i("TEST", "NORMAL: " + (System.currentTimeMillis() - now));
 
         cursor.moveToFirst();
 
-        TypedCursor<Contact> typedCursor = new TypedCursor<Contact>(cursor, Contact.class);
+        List<Contact2> typedCursor = new TypedCursor<Contact2>(cursor, Contact2.class);
         now = System.currentTimeMillis();
-        for (Contact c : typedCursor) {
-           // Log.i("TEST", "second" + c.display_name);
+        for (Contact2 c : typedCursor) {
+            Log.i("TEST", "second " + c.display_name + " " + c.last_time_contacted);
         }
         Log.i("TEST", "better: " + (System.currentTimeMillis() - now));
 
     }
 
     public static class Contact {
-        public Contact(){}
+        public Contact() {
+        }
+
         public String display_name;
+    }
+
+    public static class Contact2 {
+        public Contact2() {
+        }
+
+        public String last_time_contacted;
+        public String display_name;
+
     }
 }
