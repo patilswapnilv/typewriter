@@ -29,7 +29,8 @@ object General {
         "junit" % "junit" % "4.10" % "test",
         "com.pivotallabs" % "robolectric" % "1.1" % "test",
         "com.novocode" % "junit-interface" % "0.8" % "test",
-        "com.google.android.maps" % "maps" % "15_r2" % "test"
+        "com.google.android.maps" % "maps" % "15_r2" % "test",
+        "org.mockito" % "mockito-core" % "1.9.0" % "test"
       ),
       // needed for google maps.
       resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"

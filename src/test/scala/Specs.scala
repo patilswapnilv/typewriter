@@ -1,6 +1,7 @@
-import android.database.MatrixCursor
-import novoda.android.typewriter.cursor.{TypedCursor, MyObject, CursorMarshaller}
+import android.database.{Cursor, MatrixCursor}
+import novoda.android.typewriter.cursor.{CursorListIterator, TypedCursor, MyObject, CursorMarshaller}
 import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.mock.MockitoSugar
 import org.scalatest.WordSpec
 
 class CursorMarshallerSpec extends WordSpec with ShouldMatchers with RoboSpecs {
@@ -28,10 +29,55 @@ class CursorMarshallerSpec extends WordSpec with ShouldMatchers with RoboSpecs {
   }
 }
 
+import org.mockito.Mockito._
+
 class CursorListIteratorSpec extends TypeWriterSpec {
   "A cursor list iterator" should {
-    "give correct size" in {
 
+    "ensure it can iterate if position is within size with hasNext" in {
+      (0 until 9).foreach {
+        i =>
+          val cursor = mock[Cursor]
+          when(cursor.getCount).thenReturn(10)
+          when(cursor.getPosition).thenReturn(i)
+          new CursorListIterator(cursor, null, 0).hasNext should be(true)
+      }
+    }
+
+    "ensure it does not have next if position is count - 1" in {
+      val cursor = mock[Cursor]
+      when(cursor.getCount).thenReturn(10)
+      when(cursor.getPosition).thenReturn(9)
+      new CursorListIterator(cursor, null, 0).hasNext should be(false)
+    }
+
+    "have previous if cursor is above 1" in {
+      (1 until 10).foreach {
+        i =>
+          val cursor = mock[Cursor]
+          when(cursor.getCount).thenReturn(10)
+          when(cursor.getPosition).thenReturn(i)
+          new CursorListIterator(cursor, null, 0).hasPrevious should be(true)
+      }
+    }
+
+    "does not have previous if position is 0" in {
+      val cursor = mock[Cursor]
+      when(cursor.getCount).thenReturn(10)
+      when(cursor.getPosition).thenReturn(0)
+      new CursorListIterator(cursor, null, 0).hasPrevious should be(false)
+    }
+
+    "return the next index" in {
+      val cursor = mock[Cursor]
+      when(cursor.getPosition).thenReturn(5)
+      new CursorListIterator(cursor, null, 0).nextIndex should be(6)
+    }
+
+    "return the previous index" in {
+      val cursor = mock[Cursor]
+      when(cursor.getPosition).thenReturn(5)
+      new CursorListIterator(cursor, null, 0).previousIndex() should be(4)
     }
   }
 }
@@ -46,4 +92,4 @@ class TypedCursorSpec extends WordSpec with ShouldMatchers with RoboSpecs {
   }
 }
 
-trait TypeWriterSpec extends WordSpec with ShouldMatchers with RoboSpecs
+trait TypeWriterSpec extends WordSpec with ShouldMatchers with MockitoSugar with RoboSpecs
