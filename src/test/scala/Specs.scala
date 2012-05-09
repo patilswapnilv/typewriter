@@ -40,7 +40,7 @@ class CursorListIteratorSpec extends TypeWriterSpec {
           val cursor = mock[Cursor]
           when(cursor.getCount).thenReturn(10)
           when(cursor.getPosition).thenReturn(i)
-          new CursorListIterator(cursor, null, 0).hasNext should be(true)
+          CursorListIterator(cursor).hasNext should be(true)
       }
     }
 
@@ -48,7 +48,7 @@ class CursorListIteratorSpec extends TypeWriterSpec {
       val cursor = mock[Cursor]
       when(cursor.getCount).thenReturn(10)
       when(cursor.getPosition).thenReturn(9)
-      new CursorListIterator(cursor, null, 0).hasNext should be(false)
+      CursorListIterator(cursor).hasNext should be(false)
     }
 
     "have previous if cursor is above 1" in {
@@ -57,7 +57,7 @@ class CursorListIteratorSpec extends TypeWriterSpec {
           val cursor = mock[Cursor]
           when(cursor.getCount).thenReturn(10)
           when(cursor.getPosition).thenReturn(i)
-          new CursorListIterator(cursor, null, 0).hasPrevious should be(true)
+          CursorListIterator(cursor).hasPrevious should be(true)
       }
     }
 
@@ -65,19 +65,23 @@ class CursorListIteratorSpec extends TypeWriterSpec {
       val cursor = mock[Cursor]
       when(cursor.getCount).thenReturn(10)
       when(cursor.getPosition).thenReturn(0)
-      new CursorListIterator(cursor, null, 0).hasPrevious should be(false)
+      CursorListIterator(cursor).hasPrevious should be(false)
     }
 
     "return the next index" in {
       val cursor = mock[Cursor]
       when(cursor.getPosition).thenReturn(5)
-      new CursorListIterator(cursor, null, 0).nextIndex should be(6)
+      CursorListIterator(cursor).nextIndex should be(6)
     }
 
     "return the previous index" in {
       val cursor = mock[Cursor]
       when(cursor.getPosition).thenReturn(5)
-      new CursorListIterator(cursor, null, 0).previousIndex() should be(4)
+      CursorListIterator(cursor).previousIndex() should be(4)
+    }
+
+    object CursorListIterator {
+      def apply(cursor: Cursor) = new CursorListIterator(cursor, null, null, 0)
     }
   }
 }

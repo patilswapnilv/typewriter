@@ -8,10 +8,12 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     private final Cursor cur;
     private final CursorMarshaller<T> marshaller;
+    private final Class<T> type;
 
-    public CursorListIterator(Cursor cur, CursorMarshaller<T> marshaller, int index) {
+    public CursorListIterator(Cursor cur, CursorMarshaller<T> marshaller, Class<T> type, int index) {
         this.cur = cur;
         this.marshaller = marshaller;
+        this.type = type;
         cur.move(index);
     }
 
@@ -29,7 +31,8 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public T next() {
-        return null;
+        cur.move(nextIndex());
+        return marshaller.marshall(cur, type);
     }
 
     @Override
@@ -39,7 +42,8 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public T previous() {
-        return null;
+        cur.move(previousIndex());
+        return marshaller.marshall(cur, type);
     }
 
     @Override
