@@ -21,7 +21,6 @@ public class TypedCursor<T> implements List<T>, Iterator<T>, Closable {
         this.cursor = cursor;
         this.type = type;
         this.marshaller = new CursorMarshaller<T>();
-
         columns = Arrays.asList(cursor.getColumnNames());
         fields = new ArrayList<Field>();
         for (String name : columns) {
@@ -48,7 +47,7 @@ public class TypedCursor<T> implements List<T>, Iterator<T>, Closable {
 
     @Override
     public int size() {
-        return cursor.getCount() - 1;
+        return cursor.getCount();
     }
 
     @Override
@@ -83,95 +82,25 @@ public class TypedCursor<T> implements List<T>, Iterator<T>, Closable {
 
     @Override
     public ListIterator<T> listIterator() {
-        return new CursorListIterator();
+        return new CursorListIterator<T>(cursor, marshaller, type, 0);
     }
 
     @Override
     public ListIterator<T> listIterator(int i) {
-        return new CursorListIterator();
-    }
-
-    public class CursorListIterator implements ListIterator<T> {
-
-        @Override
-        public void add(T t) {
-            throw new RuntimeException("Modification Operations not supported");
-        }
-
-        @Override
-        public boolean hasNext() {
-            return TypedCursor.this.hasNext();
-        }
-
-        @Override
-        public boolean hasPrevious() {
-            return getCursor().getPosition() > 0;
-        }
-
-        @Override
-        public T next() {
-            return TypedCursor.this.next();
-        }
-
-        @Override
-        public int nextIndex() {
-            return cursor.getPosition() + 1;
-        }
-
-        @Override
-        public T previous() {
-            cursor.moveToPrevious();
-            try {
-                return marshaller.marshall(cursor, type);
-            } catch (InstantiationException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            return null;
-        }
-
-        @Override
-        public int previousIndex() {
-            return cursor.getPosition() + 1;
-        }
-
-        @Override
-        public void remove() {
-            throw new RuntimeException("Modification Operations not supported");
-        }
-
-        @Override
-        public void set(T t) {
-            throw new RuntimeException("Modification Operations not supported");
-        }
+        return new CursorListIterator<T>(cursor, marshaller, type, i);
     }
 
     @Override
     public T next() {
         cursor.moveToNext();
-        try {
-            return marshaller.marshall(cursor, type);
-        } catch (InstantiationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return null;
+        return marshaller.marshall(cursor, type);
     }
 
 
     @Override
     public T get(int index) {
         cursor.move(index);
-        try {
-            return marshaller.marshall(cursor, type);
-        } catch (InstantiationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return null;
+        return marshaller.marshall(cursor, type);
     }
 
     @Override

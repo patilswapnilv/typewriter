@@ -4,7 +4,9 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.WordSpec
 
-class CursorMarshallerSpec extends WordSpec with ShouldMatchers with RoboSpecs {
+import org.mockito.Mockito._
+
+class CursorMarshallerSpec extends TypeWriterSpec {
 
   "a cursor marshaller" should {
 
@@ -29,7 +31,6 @@ class CursorMarshallerSpec extends WordSpec with ShouldMatchers with RoboSpecs {
   }
 }
 
-import org.mockito.Mockito._
 
 class CursorListIteratorSpec extends TypeWriterSpec {
   "A cursor list iterator" should {
@@ -80,18 +81,40 @@ class CursorListIteratorSpec extends TypeWriterSpec {
       CursorListIterator(cursor).previousIndex() should be(4)
     }
 
+    "not return have previous if index is set" in {
+      val cursor = mock[Cursor]
+      when(cursor.getPosition).thenReturn(5)
+      CursorListIterator(cursor, 5).hasPrevious should be(false)
+    }
+
     object CursorListIterator {
       def apply(cursor: Cursor) = new CursorListIterator(cursor, null, null, 0)
+
+      def apply(cursor: Cursor, index: Int) = new CursorListIterator(cursor, null, null, index)
     }
   }
 }
 
-class TypedCursorSpec extends WordSpec with ShouldMatchers with RoboSpecs {
+class TypedCursorSpec extends TypeWriterSpec {
+
   "a typed cursor" should {
-    "produce a correct type" in {
-      val cursor = new MatrixCursor(List("test").toArray)
-      val typedcursor = new TypedCursor[MyObject](cursor, classOf[MyObject])
-      typedcursor.size() should be(0)
+
+    "give empty count" in {
+      val cursor = mock[Cursor]
+      when(cursor.getCount).thenReturn(0)
+      when(cursor.getColumnNames).thenReturn(List("one").toArray)
+      TypedCursor(cursor).size should be(0)
+    }
+
+    "give correct count" in {
+      val cursor = mock[Cursor]
+      when(cursor.getCount).thenReturn(5)
+      when(cursor.getColumnNames).thenReturn(List("one").toArray)
+      TypedCursor(cursor).size should be(5)
+    }
+
+    object TypedCursor {
+      def apply(cursor: Cursor) = new TypedCursor(cursor, classOf[MyObject])
     }
   }
 }

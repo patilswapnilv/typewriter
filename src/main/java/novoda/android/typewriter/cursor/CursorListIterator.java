@@ -9,11 +9,13 @@ public class CursorListIterator<T> implements ListIterator<T> {
     private final Cursor cur;
     private final CursorMarshaller<T> marshaller;
     private final Class<T> type;
+    private final int index;
 
     public CursorListIterator(Cursor cur, CursorMarshaller<T> marshaller, Class<T> type, int index) {
         this.cur = cur;
         this.marshaller = marshaller;
         this.type = type;
+        this.index = index;
         cur.move(index);
     }
 
@@ -26,6 +28,7 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public boolean hasPrevious() {
+        if (cur.getPosition() <= index) return false;
         return cur.getPosition() > 0;
     }
 
