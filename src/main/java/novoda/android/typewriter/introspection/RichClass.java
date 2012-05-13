@@ -58,9 +58,4 @@ public class RichClass {
         }
         throw new NoSuchMethodException("can not find method " + what);
     }
-
-    @Override
-    public String toString() {
-        return "RichClass{" + "klass=" + klass + ", methods=" + methods + '}';
-    }
 }

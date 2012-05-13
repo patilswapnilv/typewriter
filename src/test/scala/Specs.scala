@@ -92,8 +92,23 @@ class CursorListIteratorSpec extends TypeWriterSpec {
       CursorListIterator(cursor, 5).hasPrevious should be(false)
     }
 
+    "throw an exceptio for modification method" in {
+      val cursor = mock[Cursor]
+      evaluating(
+        CursorListIterator(cursor).add("")
+      ) should produce[RuntimeException]
+
+      evaluating(
+        CursorListIterator(cursor).set("")
+      ) should produce[RuntimeException]
+
+      evaluating(
+        CursorListIterator(cursor).remove()
+      ) should produce[RuntimeException]
+    }
+
     object CursorListIterator {
-      def apply(cursor: Cursor) = new CursorListIterator(cursor, null, null, 0)
+      def apply(cursor: Cursor) = new CursorListIterator[Object](cursor, null, null, 0)
 
       def apply(cursor: Cursor, index: Int) = new CursorListIterator(cursor, null, null, index)
     }

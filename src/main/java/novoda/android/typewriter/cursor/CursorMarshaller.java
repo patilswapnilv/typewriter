@@ -11,14 +11,14 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
 
     @Override
     public T marshall(Cursor cur, Class<T> what) {
-        if (cur.getPosition() == -1) {
-            throw new RuntimeException("Cursor is at position -1");
+        if (cur.getPosition() < 0) {
+            throw new RuntimeException("Cursor is at position below 0" + cur.getPosition());
         }
 
         Field[] fields = what.getFields();
 
-   //     what.findSetterMethod("_id") => setId();
-     //   what.getMapper("_id") => getClass() real name
+        //     what.findSetterMethod("_id") => setId();
+        //   what.getMapper("_id") => getClass() real name
 
 
         T obj = null;

@@ -2,8 +2,7 @@ package novoda.android.typewriter.content;
 
 import android.content.ContentResolver;
 import android.net.Uri;
-
-import java.util.List;
+import novoda.android.typewriter.cursor.ListCursor;
 
 public class TypedResolver {
 
@@ -13,7 +12,7 @@ public class TypedResolver {
         this.resolver = resolver;
     }
 
-    public <T> List<T> query(Uri uri, Class<T> type) {
+    public <T> ListCursor<T> query(Uri uri, Class<T> type) {
         return null;
     }
 }
