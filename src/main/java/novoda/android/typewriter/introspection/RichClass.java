@@ -45,10 +45,9 @@ public class RichClass {
         if (methodMapper.containsKey(what)) {
             return methodMapper.get(what);
         }
-
         String methodName = StringUtil.asCamelifySetMethod(what);
         if (fieldMapper.containsKey(what)) {
-            methodName = fieldMapper.get(what);
+            methodName = StringUtil.asCamelifySetMethod(fieldMapper.get(what));
         }
 
         for (Method m : methods) {
@@ -56,6 +55,14 @@ public class RichClass {
                 return m;
             }
         }
-        throw new NoSuchMethodException("can not find method " + what);
+        throw new NoSuchMethodException("can not find method " + what + " " + fieldMapper);
+    }
+
+    public boolean hasMethod(String method) {
+        try {
+            return setter(method) != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

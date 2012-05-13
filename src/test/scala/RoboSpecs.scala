@@ -33,6 +33,13 @@ trait RoboSpecs extends BeforeAndAfterEach with OneInstancePerTest {
   lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
 
   override def newInstance = instrumentedClass.newInstance.asInstanceOf[Suite]
+
+  class LibRobolectricConfig extends RobolectricConfig(null) {
+    override def validate = true
+  }
+
+  class RFile {
+  }
 }
 
 object RoboSpecs {
