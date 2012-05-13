@@ -28,6 +28,11 @@ class CursorMarshallerSpec extends TypeWriterSpec {
       val obj = marshaller.marshall(c, classOf[MyObject])
       obj.test should be("hello world")
     }
+
+    "should use setter method" in {
+
+    }
+
   }
 }
 

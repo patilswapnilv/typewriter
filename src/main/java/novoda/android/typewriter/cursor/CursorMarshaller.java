@@ -16,6 +16,11 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
         }
 
         Field[] fields = what.getFields();
+
+   //     what.findSetterMethod("_id") => setId();
+     //   what.getMapper("_id") => getClass() real name
+
+
         T obj = null;
         try {
             obj = what.newInstance();

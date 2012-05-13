@@ -7,12 +7,17 @@ import de.johoop.jacoco4sbt._
 import JacocoPlugin._
 
 object General {
+
   val settings = Defaults.defaultSettings ++ Seq(
-    name := "Typewriter",
-    version := "0.1",
+    name := "typewriter",
+    organization := "com.github.charroch",
+    crossPaths := false,
+    version := "0.0.1-SNAPSHOT",
     versionCode := 0,
     scalaVersion := "2.9.1",
-    platformName in Android := "android-14"
+    platformName in Android := "android-14",
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
+    publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
   )
 
   val proguardSettings = Seq(
