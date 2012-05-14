@@ -5,14 +5,15 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.WordSpec
 
 import org.mockito.Mockito._
+import org.mockito.Matchers._
 
 class CursorMarshallerSpec extends TypeWriterSpec {
 
   "a cursor marshaller" should {
 
     "throw an exception if the cursor is not moved" in {
-      val c = new MatrixCursor(List("test").toArray)
-      c.addRow(List("hello world".asInstanceOf[AnyRef]).toArray)
+      val c = mock[Cursor]
+      when(c.getPosition).thenReturn(-1)
       val marshaller = new CursorMarshaller[MyObject]
       evaluating {
         marshaller.marshall(c, classOf[MyObject])
@@ -20,11 +21,11 @@ class CursorMarshallerSpec extends TypeWriterSpec {
     }
 
     "marshall into MyObject" in {
-      val c = new MatrixCursor(List("test").toArray)
-      c.addRow(List("hello world".asInstanceOf[AnyRef]).toArray)
+      val c = mock[Cursor]
+      when(c.getType(anyInt)).thenReturn(Cursor.FIELD_TYPE_STRING)
+      when(c.getColumnNames).thenReturn(Array("test"))
+      when(c.getString(anyInt)).thenReturn("hello world")
       val marshaller = new CursorMarshaller[MyObject]
-
-      c.moveToFirst()
       val obj = marshaller.marshall(c, classOf[MyObject])
       obj.test should be("hello world")
     }
