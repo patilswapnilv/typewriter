@@ -4,7 +4,6 @@ import android.database.Cursor;
 import novoda.android.typewriter.Marshaller;
 import novoda.android.typewriter.introspection.RichClass;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +26,8 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                 final int index = cur.getColumnIndexOrThrow(column);
                 int type = cur.getType(index);
                 Method setter = klass.setter(column);
-                Object value = cur.getFloat(index);
+//                Object value = cur.getFloat(index);
+                System.out.println("T " + type);
                 switch (type) {
                     case Cursor.FIELD_TYPE_FLOAT:
                         setter.invoke(obj, cur.getFloat(index));

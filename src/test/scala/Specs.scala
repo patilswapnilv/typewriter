@@ -30,7 +30,6 @@ class CursorMarshallerSpec extends TypeWriterSpec {
     }
 
     "should use setter method" in {
-
     }
 
   }
