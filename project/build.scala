@@ -10,7 +10,7 @@ object General {
 
   val settings = Defaults.defaultSettings ++ Seq(
     name := "typewriter",
-    organization := "com.github.charroch",
+    organization := "com.novoda",
     crossPaths := false,
     version := "0.0.1-SNAPSHOT",
     versionCode := 0,

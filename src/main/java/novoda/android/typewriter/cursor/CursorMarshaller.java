@@ -10,6 +10,10 @@ import java.util.List;
 
 public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
 
+    private final static int TYPE_INT = 0;
+    private final static int TYPE_DOUBLE = 1;
+    private final static int TYPE_LONG = 2;
+
     private RichClass richClass;
 
     @Override
@@ -26,7 +30,14 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                 if (klass.hasMethod(column)) {
                     final int index = cur.getColumnIndexOrThrow(column);
                     Method setter = klass.setter(column);
-                    setter.invoke(obj, getObjectFromCursor(cur, index));
+                    int type = TYPE_INT;
+                    Class<?> t = setter.getParameterTypes()[0];
+                    if (t.equals(long.class)) {
+                        type = TYPE_LONG;
+                    } else if (t.equals(double.class)) {
+                        type = TYPE_DOUBLE;
+                    }
+                    setter.invoke(obj, getObjectFromCursor(cur, index, type));
                 }
             }
             return obj;
@@ -35,15 +46,28 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
         }
     }
 
-    private Object getObjectFromCursor(Cursor cursor, int index) {
-        final int type = cursor.getType(index);
+    private Object getObjectFromCursor(Cursor cursor, int index, int type) {
+        final int cursorType = cursor.getType(index);
         final Object obj;
-        switch (type) {
+        switch (cursorType) {
             case Cursor.FIELD_TYPE_FLOAT:
                 obj = cursor.getFloat(index);
                 break;
             case Cursor.FIELD_TYPE_STRING:
                 obj = cursor.getString(index);
+                break;
+            case Cursor.FIELD_TYPE_INTEGER:
+                switch (type) {
+                    case TYPE_DOUBLE:
+                        obj = cursor.getDouble(index);
+                        break;
+                    case TYPE_LONG:
+                        obj = cursor.getLong(index);
+                        break;
+                    default:
+                        obj = cursor.getInt(index);
+                        break;
+                }
                 break;
             default:
                 obj = "";

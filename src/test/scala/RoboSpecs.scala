@@ -1,3 +1,5 @@
+package novoda.android.typewriter
+
 import android.net.Uri__FromAndroid
 import android.R
 import com.xtremelabs.robolectric.bytecode.{RobolectricClassLoader, ShadowWrangler}
@@ -6,7 +8,9 @@ import com.xtremelabs.robolectric.res.ResourceLoader
 import com.xtremelabs.robolectric.shadows.ShadowApplication
 import com.xtremelabs.robolectric.{ApplicationResolver, Robolectric, RobolectricConfig}
 import java.io.File
-import org.scalatest.{Suite, OneInstancePerTest, BeforeAndAfterEach}
+import org.scalatest.{WordSpec, Suite, OneInstancePerTest, BeforeAndAfterEach}
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.mock.MockitoSugar
 
 trait RoboSpecs extends BeforeAndAfterEach with OneInstancePerTest {
   this: Suite =>
@@ -40,6 +44,7 @@ trait RoboSpecs extends BeforeAndAfterEach with OneInstancePerTest {
 
   class RFile {
   }
+
 }
 
 object RoboSpecs {
@@ -62,3 +67,5 @@ object RoboSpecs {
     loader
   }
 }
+
+trait TypeWriterSpec extends WordSpec with ShouldMatchers with MockitoSugar with RoboSpecs
