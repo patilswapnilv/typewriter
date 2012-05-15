@@ -23,26 +23,32 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
             obj = what.newInstance();
             List<String> columnNames = Arrays.asList(cur.getColumnNames());
             for (String column : columnNames) {
-                final int index = cur.getColumnIndexOrThrow(column);
-                int type = cur.getType(index);
-                Method setter = klass.setter(column);
-//                Object value = cur.getFloat(index);
-                System.out.println("T " + type);
-                switch (type) {
-                    case Cursor.FIELD_TYPE_FLOAT:
-                        setter.invoke(obj, cur.getFloat(index));
-                        break;
-
-                    case Cursor.FIELD_TYPE_STRING:
-                        setter.invoke(obj, cur.getString(index));
-                        break;
-
+                if (klass.hasMethod(column)) {
+                    final int index = cur.getColumnIndexOrThrow(column);
+                    Method setter = klass.setter(column);
+                    setter.invoke(obj, getObjectFromCursor(cur, index));
                 }
             }
             return obj;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Object getObjectFromCursor(Cursor cursor, int index) {
+        final int type = cursor.getType(index);
+        final Object obj;
+        switch (type) {
+            case Cursor.FIELD_TYPE_FLOAT:
+                obj = cursor.getFloat(index);
+                break;
+            case Cursor.FIELD_TYPE_STRING:
+                obj = cursor.getString(index);
+                break;
+            default:
+                obj = "";
+        }
+        return obj;
     }
 
     private RichClass getRichClass(Class<T> klass) {
