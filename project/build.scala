@@ -43,6 +43,7 @@ object General {
 }
 
 object AndroidBuild extends Build {
+
   lazy val main = Project(
     "Typewriter",
     file("."),
