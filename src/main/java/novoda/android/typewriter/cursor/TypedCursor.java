@@ -6,7 +6,7 @@ import android.util.Log;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class TypedCursor<T> implements List<T>, Iterator<T>, Closable {
+public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closable {
 
     private static final String TAG = TypedCursor.class.getSimpleName();
 
@@ -95,7 +95,6 @@ public class TypedCursor<T> implements List<T>, Iterator<T>, Closable {
         cursor.moveToNext();
         return marshaller.marshall(cursor, type);
     }
-
 
     @Override
     public T get(int index) {
