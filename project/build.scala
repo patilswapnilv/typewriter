@@ -1,3 +1,6 @@
+import com.jsuereth.ghpages.GhPages.ghpages
+import com.jsuereth.git.GitPlugin.git
+import com.jsuereth.sbtsite.SitePlugin.site
 import sbt._
 
 import Keys._
@@ -47,7 +50,9 @@ object AndroidBuild extends Build {
   lazy val main = Project(
     "Typewriter",
     file("."),
-    settings = General.fullAndroidSettings
+    settings = General.fullAndroidSettings ++ site.settings ++ ghpages.settings ++ Seq(
+      git.remoteRepo := "git@github.com:charroch/typewriter.git"
+    )
   )
 
   lazy val tests = Project(
