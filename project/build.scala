@@ -51,7 +51,7 @@ object AndroidBuild extends Build {
   lazy val main = Project(
     "Typewriter",
     file("."),
-    settings = General.settings ++ site.settings ++ ghpages.settings ++ Seq(
+    settings = General.settings ++ site.settings ++ site.includeScaladoc() ++ ghpages.settings ++ Seq(
       git.remoteRepo := "git@github.com:charroch/typewriter.git",
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.8.RC1" % "test",
