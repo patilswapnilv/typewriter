@@ -20,7 +20,7 @@ trait RoboSpecs extends BeforeAndAfterEach with OneInstancePerTest {
     super.beforeEach()
   }
 
-  lazy val robolectricConfig = new RobolectricConfig(new File("./src/main"))
+  lazy val robolectricConfig = new RobolectricConfig(RoboSpecs.tmpManifestDir, RoboSpecs.tmpResDir, RoboSpecs.tmpAssetDir)
   lazy val resourceLoader = {
     val rClassName: String = robolectricConfig.getRClassName
     val rClass: Class[_] = Class.forName(rClassName)
@@ -37,17 +37,42 @@ trait RoboSpecs extends BeforeAndAfterEach with OneInstancePerTest {
   lazy val instrumentedClass = RoboSpecs.classLoader.bootstrap(this.getClass)
 
   override def newInstance = instrumentedClass.newInstance.asInstanceOf[Suite]
+}
 
-  class LibRobolectricConfig extends RobolectricConfig(null) {
-    override def validate = true
-  }
-
-  class RFile {
-  }
-
+object R {
 }
 
 object RoboSpecs {
+
+  lazy val tmpDir = {
+    val f = new File(System.getProperty("java.io.tmpdir"));
+    f.mkdirs()
+    f
+  }
+
+  lazy val tmpResDir = {
+    val f = new File(tmpDir, "res")
+    f.mkdirs()
+    f
+  }
+
+  lazy val tmpAssetDir = {
+    val f = new File(tmpDir, "assets")
+    f.mkdirs()
+    f
+  }
+
+  lazy val tmpManifestDir = {
+    val xml = <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="novoda.android.typewriter">
+      <application></application>
+    </manifest>
+    val f = new File(tmpDir, "AndroidManifest.xml")
+    if (!f.exists()) {
+      scala.xml.XML.save(f.getAbsolutePath, xml)
+    }
+    f
+  }
+
   lazy val classHandler = ShadowWrangler.getInstance
   lazy val classLoader = {
     val loader = new RobolectricClassLoader(classHandler)
