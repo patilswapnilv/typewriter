@@ -28,7 +28,6 @@ public class TypedResolver {
         return get(uri, null, selection, selectionArgs, type);
     }
 
-
     public <T> T get(Uri uri, String[] projection, String selection, String[] selectionArgs, Class<T> type) {
         final Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
         if (cursor.moveToFirst()) {
