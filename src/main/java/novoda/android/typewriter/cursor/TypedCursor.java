@@ -98,7 +98,7 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closable {
 
     @Override
     public T get(int index) {
-        cursor.move(index);
+        cursor.moveToPosition(index);
         return marshaller.marshall(cursor, type);
     }
 
