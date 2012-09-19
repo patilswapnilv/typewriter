@@ -37,7 +37,6 @@ object General {
         "junit" % "junit" % "4.10" % "test",
         "com.pivotallabs" % "robolectric" % "1.1" % "test",
         "com.novocode" % "junit-interface" % "0.8" % "test",
-        "com.google.android.maps" % "maps" % "15_r2" % "test",
         "org.mockito" % "mockito-core" % "1.9.0" % "test",
         "com.google.android" % "android" % "4.0.1.2" % "provided"
       ),
@@ -63,8 +62,8 @@ object AndroidBuild extends Build {
         "junit" % "junit" % "4.10" % "test",
         "com.pivotallabs" % "robolectric" % "1.1" % "test",
         "com.novocode" % "junit-interface" % "0.8" % "test",
-        "com.google.android.maps" % "maps" % "15_r2" % "test",
         "org.mockito" % "mockito-core" % "1.9.0" % "test",
+        "com.google.android" % "support-v4" % "r7",
         "com.google.android" % "android" % "4.0.1.2" % "provided"
       )
     )

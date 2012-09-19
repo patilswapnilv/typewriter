@@ -28,7 +28,7 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closable {
                 fields.add(type.getField(name));
             } catch (NoSuchFieldException e) {
                 if (Log.isLoggable(TAG, Log.WARN)) {
-                    Log.w(TAG, "Cursor has column " + name + " but field in class not present" + type.getSimpleName());
+                    Log.w(TAG, "Cursor has column " + name + " but field in class not present in " + type.getSimpleName());
                 }
             }
         }
