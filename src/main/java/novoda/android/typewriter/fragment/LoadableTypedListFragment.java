@@ -9,9 +9,7 @@ import novoda.android.typewriter.content.Query;
 import novoda.android.typewriter.cursor.ListCursor;
 import novoda.android.typewriter.loader.TypedLoader;
 
-
-public abstract class LoadableTypedListFragment<T> extends SherlockListFragment
-        implements LoaderManager.LoaderCallbacks<ListCursor<T>> {
+public abstract class LoadableTypedListFragment<T> extends SherlockListFragment implements LoaderManager.LoaderCallbacks<ListCursor<T>> {
 
     @Override
     public void onAttach(Activity activity) {
