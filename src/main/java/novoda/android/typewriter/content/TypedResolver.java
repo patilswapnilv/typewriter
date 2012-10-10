@@ -1,6 +1,7 @@
 package novoda.android.typewriter.content;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import novoda.android.typewriter.cursor.CursorMarshaller;
@@ -56,4 +57,20 @@ public class TypedResolver {
         final Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, sortOrder);
         return new TypedCursor<T>(cursor, type);
     }
+
+    /**
+     * INSERT
+     */
+    public <T> Uri insert(Uri against, T what, ContentValuesMarshaller marshaller) {
+        //ContentValuesMarshaller marshaller = new ContentValuesMarshaller<T>();
+        ContentValues values = marshaller.marshall(what, ContentValues.class);
+        return resolver.insert(against, values);
+    }
+
+    public <T> int update(Uri against, T what, String where, String[] arg, ContentValuesMarshaller marshaller) {
+        //ContentValuesMarshaller marshaller = new ContentValuesMarshaller<T>();
+        ContentValues values = marshaller.marshall(what, ContentValues.class);
+        return resolver.update(against, values, where, arg);
+    }
+
 }

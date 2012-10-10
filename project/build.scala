@@ -38,7 +38,8 @@ object General {
         "com.pivotallabs" % "robolectric" % "1.1" % "test",
         "com.novocode" % "junit-interface" % "0.8" % "test",
         "org.mockito" % "mockito-core" % "1.9.0" % "test",
-        "com.google.android" % "android" % "4.0.1.2" % "provided"
+        "com.google.android" % "android" % "4.0.1.2" % "provided",
+        "com.actionbarsherlock" % "actionbarsherlock" % "4.2.0"
       ),
       // needed for google maps.
       resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
@@ -56,15 +57,16 @@ object AndroidBuild extends Build {
       ++ site.jekyllSupport()
       ++ ghpages.settings
       ++ Seq(
-        git.remoteRepo := "git@github.com:charroch/typewriter.git",
-        libraryDependencies ++= Seq(
+      git.remoteRepo := "git@github.com:charroch/typewriter.git",
+      libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "1.8.RC1" % "test",
         "junit" % "junit" % "4.10" % "test",
         "com.pivotallabs" % "robolectric" % "1.1" % "test",
         "com.novocode" % "junit-interface" % "0.8" % "test",
         "org.mockito" % "mockito-core" % "1.9.0" % "test",
         "com.google.android" % "support-v4" % "r7",
-        "com.google.android" % "android" % "4.0.1.2" % "provided"
+        "com.google.android" % "android" % "4.0.1.2" % "provided",
+        "com.actionbarsherlock" % "actionbarsherlock" % "4.2.0" % "test"
       )
     )
   )
