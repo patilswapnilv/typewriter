@@ -10,5 +10,5 @@ public abstract class ContentValuesMarshaller<T> implements Marshaller<ContentVa
         return from(from);
     }
 
-    abstract ContentValues from(T from);
+    public abstract ContentValues from(T from);
 }
