@@ -37,7 +37,10 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                     } else if (t.equals(double.class)) {
                         type = TYPE_DOUBLE;
                     }
-                    setter.invoke(obj, getObjectFromCursor(cur, index, type));
+                    Object objArg = getObjectFromCursor(cur, index, type);
+                    if (objArg != null) {
+                        setter.invoke(obj, objArg);
+                    }
                 }
             }
             return obj;
@@ -70,7 +73,7 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                 }
                 break;
             default:
-                obj = "";
+                obj = null;
         }
         return obj;
     }
