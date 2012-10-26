@@ -72,6 +72,9 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                         break;
                 }
                 break;
+            case Cursor.FIELD_TYPE_BLOB:
+                obj = cursor.getBlob(index);
+                break;
             default:
                 obj = null;
         }
