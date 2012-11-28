@@ -23,13 +23,14 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
         }
         RichClass klass = getRichClass(what);
         T obj = null;
+        Method setter = null;
         try {
             obj = what.newInstance();
             List<String> columnNames = Arrays.asList(cur.getColumnNames());
             for (String column : columnNames) {
                 if (klass.hasMethod(column)) {
                     final int index = cur.getColumnIndexOrThrow(column);
-                    Method setter = klass.setter(column);
+                    setter = klass.setter(column);
                     int type = TYPE_INT;
                     Class<?> t = setter.getParameterTypes()[0];
                     if (t.equals(long.class)) {
@@ -45,7 +46,8 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
             }
             return obj;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to marshall " +
+                    ((setter != null) ? setter.getName() : " setter is null"), e);
         }
     }
 
