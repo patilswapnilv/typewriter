@@ -1,12 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
+          <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.novoda</groupId>
     <artifactId>typewriter</artifactId>
     <packaging>jar</packaging>
     <description>typewriter</description>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>typewriter</name>
     <organization>
         <name>com.novoda</name>
