@@ -1,4 +1,4 @@
-package novoda.android.typewriter.fragment;
+package ;
 
 import android.app.Activity;
 import android.os.Bundle;
