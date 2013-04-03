@@ -72,6 +72,7 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closable {
 
     @Override
     public Iterator<T> iterator() {
+        cursor.moveToPosition(-1);
         return this;
     }
 
@@ -82,6 +83,7 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closable {
 
     @Override
     public ListIterator<T> listIterator() {
+        cursor.moveToPosition(-1);
         return new CursorListIterator<T>(cursor, marshaller, type, 0);
     }
 
