@@ -26,18 +26,18 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
     }
 
     @Override
-    public T marshall(Cursor cur, Class<T> what) {
-        if (cur.getPosition() < 0) {
-            throw new RuntimeException("Cursor is at position below 0" + cur.getPosition());
+    public T marshall(Cursor cursor, Class<T> what) {
+        if (cursor.getPosition() < 0) {
+            throw new RuntimeException("Cursor is at position below 0" + cursor.getPosition());
         }
         RichClass klass = getRichClass(what);
         T obj = null;
         try {
             obj = what.newInstance();
-            List<String> columnNames = Arrays.asList(cur.getColumnNames());
+            List<String> columnNames = Arrays.asList(cursor.getColumnNames());
             for (String column : columnNames) {
                 if (klass.hasMethod(column)) {
-                    final int index = cur.getColumnIndexOrThrow(column);
+                    final int index = cursor.getColumnIndexOrThrow(column);
                     Method setter = klass.setter(column);
                     int type = TYPE_INT;
                     Class<?> t = setter.getParameterTypes()[0];
@@ -46,7 +46,7 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                     } else if (t.equals(double.class)) {
                         type = TYPE_DOUBLE;
                     }
-                    setter.invoke(obj, getObjectFromCursor(cur, index, type));
+                    setter.invoke(obj, getObjectFromCursor(cursor, index, type));
                 }
             }
             return obj;
