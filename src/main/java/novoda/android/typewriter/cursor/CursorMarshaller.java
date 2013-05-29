@@ -15,10 +15,10 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
     private final static int TYPE_DOUBLE = 1;
     private final static int TYPE_LONG = 2;
 
-    private RichClass richClass;
+    private final RichClass<T> richClass;
 
-    public CursorMarshaller(Cursor cursor, Class<T> type) {
-
+    public CursorMarshaller(Cursor cursor, Class<T> classType) {
+        richClass = new RichClass<T>(classType);
     }
 
     @Override
@@ -26,15 +26,14 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
         if (cursor.getPosition() < 0) {
             throw new RuntimeException("Cursor is at position below 0" + cursor.getPosition());
         }
-        RichClass klass = getRichClass(what);
         T obj = null;
         try {
-            obj = what.newInstance();
+            obj = richClass.newInstance();
             List<String> columnNames = Arrays.asList(cursor.getColumnNames());
             for (String column : columnNames) {
-                if (klass.hasMethod(column)) {
+                if (richClass.hasMethod(column)) {
                     final int index = cursor.getColumnIndexOrThrow(column);
-                    Method setter = klass.setter(column);
+                    Method setter = richClass.setter(column);
                     int type = TYPE_INT;
                     Class<?> t = setter.getParameterTypes()[0];
                     if (t.equals(long.class)) {
@@ -78,12 +77,5 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
                 obj = "";
         }
         return obj;
-    }
-
-    private RichClass getRichClass(Class<T> klass) {
-        if (richClass == null) {
-            richClass = new RichClass(klass);
-        }
-        return richClass;
     }
 }

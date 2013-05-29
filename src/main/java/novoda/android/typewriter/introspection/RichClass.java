@@ -1,8 +1,5 @@
 package novoda.android.typewriter.introspection;
 
-import novoda.android.typewriter.annotation.Mapper;
-import novoda.android.typewriter.util.StringUtil;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -10,9 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RichClass {
+import novoda.android.typewriter.annotation.Mapper;
+import novoda.android.typewriter.util.StringUtil;
 
-    private final Class klass;
+public class RichClass<T> {
+
+    private final Class<T> klass;
 
     private List<Method> methods;
 
@@ -20,7 +20,7 @@ public class RichClass {
 
     private Map<String, Method> methodMapper;
 
-    public RichClass(Class klass) {
+    public RichClass(Class<T> klass) {
         this.klass = klass;
         methods = Arrays.asList(klass.getMethods());
 
@@ -63,6 +63,14 @@ public class RichClass {
             return setter(method) != null;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public T newInstance() {
+        try {
+            return klass.newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
         }
     }
 }
