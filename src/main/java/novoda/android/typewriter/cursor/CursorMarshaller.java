@@ -21,10 +21,6 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
 
     }
 
-    public CursorMarshaller() {
-
-    }
-
     @Override
     public T marshall(Cursor cursor, Class<T> what) {
         if (cursor.getPosition() < 0) {
