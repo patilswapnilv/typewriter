@@ -5,10 +5,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
-import novoda.android.typewriter.cursor.CursorMarshaller;
-import novoda.android.typewriter.cursor.TypedCursor;
 
 import java.util.List;
+
+import novoda.android.typewriter.cursor.TypedCursor;
 
 public class TypedActivity extends Activity {
     @Override
@@ -16,7 +16,6 @@ public class TypedActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-        CursorMarshaller<Contact> marshaller = new CursorMarshaller<Contact>();
 
         long now = System.currentTimeMillis();
         while (cursor.moveToNext()) {
@@ -33,13 +32,6 @@ public class TypedActivity extends Activity {
         }
         Log.i("TEST", "better: " + (System.currentTimeMillis() - now));
 
-    }
-
-    public static class Contact {
-        public Contact() {
-        }
-
-        public String display_name;
     }
 
     public static class Contact2 {
