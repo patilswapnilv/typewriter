@@ -1,37 +1,23 @@
 package novoda.android.typewriter.cursor;
 
 import android.database.Cursor;
-import android.util.Log;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.io.Closeable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
-public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closable {
-
-    private static final String TAG = TypedCursor.class.getSimpleName();
+public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
 
     private final Cursor cursor;
     private final Class<T> type;
     private final CursorMarshaller<T> marshaller;
 
-    List<String> columns;
-    List<Field> fields;
-
     public TypedCursor(Cursor cursor, Class<T> type) {
         this.cursor = cursor;
         this.type = type;
-        this.marshaller = new CursorMarshaller<T>();
-        columns = Arrays.asList(cursor.getColumnNames());
-        fields = new ArrayList<Field>();
-        for (String name : columns) {
-            try {
-                fields.add(type.getField(name));
-            } catch (NoSuchFieldException e) {
-                if (Log.isLoggable(TAG, Log.WARN)) {
-                    Log.w(TAG, "Cursor has column " + name + " but field in class not present in " + type.getSimpleName());
-                }
-            }
-        }
+        this.marshaller = new CursorMarshaller<T>(cursor, type);
     }
 
     @Override

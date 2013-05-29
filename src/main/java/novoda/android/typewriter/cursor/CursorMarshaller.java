@@ -1,12 +1,13 @@
 package novoda.android.typewriter.cursor;
 
 import android.database.Cursor;
-import novoda.android.typewriter.Marshaller;
-import novoda.android.typewriter.introspection.RichClass;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+
+import novoda.android.typewriter.Marshaller;
+import novoda.android.typewriter.introspection.RichClass;
 
 public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
 
@@ -15,6 +16,14 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
     private final static int TYPE_LONG = 2;
 
     private RichClass richClass;
+
+    public CursorMarshaller(Cursor cursor, Class<T> type) {
+
+    }
+
+    public CursorMarshaller() {
+
+    }
 
     @Override
     public T marshall(Cursor cur, Class<T> what) {

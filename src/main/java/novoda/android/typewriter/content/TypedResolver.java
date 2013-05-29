@@ -3,10 +3,9 @@ package novoda.android.typewriter.content;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
-import novoda.android.typewriter.cursor.CursorMarshaller;
+
 import novoda.android.typewriter.cursor.ListCursor;
 import novoda.android.typewriter.cursor.TypedCursor;
-import novoda.android.typewriter.util.ClassUtil;
 
 public class TypedResolver {
 
@@ -30,10 +29,7 @@ public class TypedResolver {
 
     public <T> T get(Uri uri, String[] projection, String selection, String[] selectionArgs, Class<T> type) {
         final Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
-        if (cursor.moveToFirst()) {
-            return new CursorMarshaller<T>().marshall(cursor, type);
-        }
-        return ClassUtil.newInstance(type);
+        return new TypedCursor<T>(cursor, type).get(0);
     }
 
     public <T> ListCursor<T> query(Uri uri, Class<T> type) {
