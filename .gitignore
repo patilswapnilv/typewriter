@@ -20,3 +20,6 @@ target/
 project/boot/
 *.jar
 *.iml
+.gradle
+*.ipr
+*.iws
