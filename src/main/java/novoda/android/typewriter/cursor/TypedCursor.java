@@ -12,12 +12,12 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
 
     private final Cursor cursor;
     private final Class<T> type;
-    private final CursorMarshaller<T> marshaller;
+    private final ReflectionCursorMarshaller<T> marshaller;
 
     public TypedCursor(Cursor cursor, Class<T> type) {
         this.cursor = cursor;
         this.type = type;
-        this.marshaller = new CursorMarshaller<T>(cursor, type);
+        this.marshaller = new ReflectionCursorMarshaller<T>(cursor, type);
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.Map;
 import novoda.android.typewriter.Marshaller;
 import novoda.android.typewriter.introspection.RichClass;
 
-public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
+public class ReflectionCursorMarshaller<T> implements Marshaller<T, Cursor> {
 
     private final static int TYPE_INT = 0;
     private final static int TYPE_DOUBLE = 1;
@@ -18,7 +18,7 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
     private final RichClass<T> richClass;
     private final Map<String, Method> methodsByName = new HashMap<String, Method>();
 
-    public CursorMarshaller(Cursor cursor, Class<T> classType) {
+    public ReflectionCursorMarshaller(Cursor cursor, Class<T> classType) {
         richClass = new RichClass<T>(classType);
         for (int i = 0; i < cursor.getColumnCount(); i++) {
             String name = cursor.getColumnName(i);
