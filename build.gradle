@@ -8,11 +8,28 @@ repositories {
 dependencies {
     compile 'com.google.android:android:4.0.1.2'
     compile 'com.google.android:support-v4:r7'
-    compile 'com.actionbarsherlock:library:4.1.0'
 
     testCompile 'org.scala-lang:scala-library:2.10.1'
-    testCompile 'org.scalatest:scalatest_2.10:1.9.1'
+
     testCompile 'org.scalatest:scalatest_2.10:1.9.1'
     testCompile 'com.pivotallabs:robolectric:1.2'
+
     testCompile 'org.mockito:mockito-core:1.9.0'
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+}
+
+task test(overwrite: true, dependsOn: compileTestScala) << {
+    ant.taskdef(
+            name: 'scalatest',
+            classname: 'org.scalatest.tools.ScalaTestAntTask',
+            classpath: configurations.testRuntime.asPath + ':' + compileScala.destinationDir  + ":" + compileTestScala.destinationDir
+    )
+    ant.scalatest(
+            runpath: sourceSets.test.output.classesDir,
+            haltonfailure: 'true',
+            fork: 'false'
+    ) {
+        println sourceSets.test.output.classesDir
+        reporter(type: 'stderr')
+    }
 }
