@@ -8,16 +8,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class TypedCursor<T> implements ListCursor<T>, Closeable {
+public class CursorList<T> implements List<T>, Closeable {
 
     private final Cursor cursor;
     private final CursorMarshaller<T> marshaller;
 
-    public TypedCursor(Cursor cursor, Class<T> type) {
+    public CursorList(Cursor cursor, Class<T> type) {
         this(cursor, new ReflectionCursorMarshaller<T>(cursor, type));
     }
 
-    public TypedCursor(Cursor cursor, CursorMarshaller<T> marshaller) {
+    public CursorList(Cursor cursor, CursorMarshaller<T> marshaller) {
         this.cursor = cursor;
         this.marshaller = marshaller;
     }
@@ -25,10 +25,6 @@ public class TypedCursor<T> implements ListCursor<T>, Closeable {
     @Override
     public void close() {
         cursor.close();
-    }
-
-    public Cursor getCursor() {
-        return cursor;
     }
 
     @Override

@@ -7,11 +7,12 @@ import android.support.v4.content.Loader;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
+import java.util.List;
+
 import novoda.android.typewriter.content.Query;
-import novoda.android.typewriter.cursor.ListCursor;
 import novoda.android.typewriter.loader.TypedLoader;
 
-public abstract class LoadableTypedFragment<T> extends SherlockFragment implements LoaderManager.LoaderCallbacks<ListCursor<T>> {
+public abstract class LoadableTypedFragment<T> extends SherlockFragment implements LoaderManager.LoaderCallbacks<List<T>> {
 
     @Override
     public void onAttach(Activity activity) {
@@ -20,9 +21,9 @@ public abstract class LoadableTypedFragment<T> extends SherlockFragment implemen
     }
 
     @Override
-    public Loader<ListCursor<T>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<T>> onCreateLoader(int i, Bundle bundle) {
         Query query = from(bundle);
-        Loader<ListCursor<T>> loader = new TypedLoader<T>(
+        Loader<List<T>> loader = new TypedLoader<T>(
                 getActivity().getApplicationContext(),
                 getType(),
                 query.getUri(), null, null, null, null);
@@ -31,7 +32,7 @@ public abstract class LoadableTypedFragment<T> extends SherlockFragment implemen
     }
 
     @Override
-    public void onLoaderReset(Loader<ListCursor<T>> loader) {
+    public void onLoaderReset(Loader<List<T>> loader) {
     }
 
     protected abstract Query from(Bundle bundle);

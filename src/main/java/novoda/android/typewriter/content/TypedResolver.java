@@ -4,8 +4,9 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
-import novoda.android.typewriter.cursor.ListCursor;
-import novoda.android.typewriter.cursor.TypedCursor;
+import java.util.List;
+
+import novoda.android.typewriter.cursor.CursorList;
 
 public class TypedResolver {
 
@@ -29,27 +30,27 @@ public class TypedResolver {
 
     public <T> T get(Uri uri, String[] projection, String selection, String[] selectionArgs, Class<T> type) {
         final Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
-        return new TypedCursor<T>(cursor, type).get(0);
+        return new CursorList<T>(cursor, type).get(0);
     }
 
-    public <T> ListCursor<T> query(Uri uri, Class<T> type) {
+    public <T> List<T> query(Uri uri, Class<T> type) {
         return query(uri, null, null, type);
     }
 
-    public <T> ListCursor<T> query(Uri uri, String selection, String[] selectionArgs, Class<T> type) {
+    public <T> List<T> query(Uri uri, String selection, String[] selectionArgs, Class<T> type) {
         return query(uri, null, selection, selectionArgs, null, type);
     }
 
-    public <T> ListCursor<T> query(Uri uri, String[] projection, String selection, String[] selectionArgs, Class<T> type) {
+    public <T> List<T> query(Uri uri, String[] projection, String selection, String[] selectionArgs, Class<T> type) {
         return query(uri, projection, selection, selectionArgs, null, type);
     }
 
-    public <T> ListCursor<T> query(Uri uri, String selection, String[] selectionArgs, String sortOrder, Class<T> type) {
+    public <T> List<T> query(Uri uri, String selection, String[] selectionArgs, String sortOrder, Class<T> type) {
         return query(uri, null, selection, selectionArgs, sortOrder, type);
     }
 
-    public <T> ListCursor<T> query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, Class<T> type) {
+    public <T> List<T> query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder, Class<T> type) {
         final Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, sortOrder);
-        return new TypedCursor<T>(cursor, type);
+        return new CursorList<T>(cursor, type);
     }
 }

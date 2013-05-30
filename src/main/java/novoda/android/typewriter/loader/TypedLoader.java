@@ -3,10 +3,12 @@ package novoda.android.typewriter.loader;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
-import novoda.android.typewriter.content.TypedResolver;
-import novoda.android.typewriter.cursor.ListCursor;
 
-public class TypedLoader<T> extends AsyncTaskLoader<ListCursor<T>> {
+import java.util.List;
+
+import novoda.android.typewriter.content.TypedResolver;
+
+public class TypedLoader<T> extends AsyncTaskLoader<List<T>> {
 
     private final Class<T> what;
     Uri uri;
@@ -71,7 +73,7 @@ public class TypedLoader<T> extends AsyncTaskLoader<ListCursor<T>> {
     }
 
     @Override
-    public ListCursor<T> loadInBackground() {
+    public List<T> loadInBackground() {
         return new TypedResolver(getContext().getContentResolver()).query(uri, projection, selection, selectionArgs, sortOrder, what);
     }
 }

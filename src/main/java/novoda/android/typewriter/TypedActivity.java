@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.List;
 
-import novoda.android.typewriter.cursor.TypedCursor;
+import novoda.android.typewriter.cursor.CursorList;
 
 public class TypedActivity extends Activity {
     @Override
@@ -25,7 +25,7 @@ public class TypedActivity extends Activity {
 
         cursor.moveToFirst();
 
-        List<Contact2> typedCursor = new TypedCursor<Contact2>(cursor, Contact2.class);
+        List<Contact2> typedCursor = new CursorList<Contact2>(cursor, Contact2.class);
         now = System.currentTimeMillis();
         for (Contact2 c : typedCursor) {
             Log.i("TEST", "second " + c.display_name + " " + c.last_time_contacted);
