@@ -56,8 +56,11 @@ public class CursorList<T> implements List<T>, Closeable {
 
     @Override
     public T get(int index) {
-        cursor.moveToPosition(index);
-        return marshaller.marshall(cursor);
+        if (cursor.moveToPosition(index)) {
+            return marshaller.marshall(cursor);
+        } else {
+            throw new CursorListException("CursorList tries to access data at index " + index + " while cursor has size " + cursor.getCount());
+        }
     }
 
     @Override
@@ -143,5 +146,11 @@ public class CursorList<T> implements List<T>, Closeable {
     @Override
     public <T> T[] toArray(T[] ts) {
         throw new UnsupportedOperationException();
+    }
+
+    public static class CursorListException extends RuntimeException {
+        public CursorListException(String message) {
+            super(message);
+        }
     }
 }

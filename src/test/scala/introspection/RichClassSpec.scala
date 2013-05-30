@@ -1,7 +1,7 @@
 package introspection
 
 import org.scalatest.WordSpec
-import reflect.BeanProperty
+import scala.reflect.BeanProperty
 import novoda.android.typewriter.introspection.RichClass
 import novoda.android.typewriter.annotation.Mapper
 import novoda.android.typewriter.cursor.MyObject

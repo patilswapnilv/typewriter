@@ -48,8 +48,5 @@ class TypedCursorSpec extends TypeWriterSpec {
       }
     }
 
-    object TypedCursor {
-      def apply(cursor: Cursor) = new CursorList(cursor, classOf[MyObject])
-    }
   }
 }
