@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
+public class TypedCursor<T> implements ListCursor<T>, Closeable {
 
     private final Cursor cursor;
     private final CursorMarshaller<T> marshaller;
@@ -44,12 +44,7 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
     @Override
     public Iterator<T> iterator() {
         cursor.moveToPosition(-1);
-        return this;
-    }
-
-    @Override
-    public boolean hasNext() {
-        return cursor.getCount() > (cursor.getPosition() + 1);
+        return new CursorListIterator<T>(cursor, marshaller, 0);
     }
 
     @Override
@@ -64,20 +59,9 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
     }
 
     @Override
-    public T next() {
-        cursor.moveToNext();
-        return marshaller.marshall(cursor);
-    }
-
-    @Override
     public T get(int index) {
         cursor.moveToPosition(index);
         return marshaller.marshall(cursor);
-    }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
