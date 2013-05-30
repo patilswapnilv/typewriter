@@ -70,12 +70,16 @@ public class RichClass<T> {
         try {
             return klass.newInstance();
         } catch (Exception e) {
-            throw new IllegalArgumentException(e);
+            throw new RichClassException(e);
         }
     }
 
     public static class RichClassException extends RuntimeException {
         public RichClassException(String reason) {
+            super(reason);
+        }
+
+        public RichClassException(Exception reason) {
             super(reason);
         }
     }
