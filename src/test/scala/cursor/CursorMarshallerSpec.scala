@@ -23,7 +23,8 @@ class CursorMarshallerSpec extends TypeWriterSpec {
     "marshall string into MyObject" in {
       val c = mock[Cursor]
       when(c.getType(anyInt)).thenReturn(Cursor.FIELD_TYPE_STRING)
-      when(c.getColumnNames).thenReturn(Array("test"))
+      when(c.getColumnCount).thenReturn(1)
+      when(c.getColumnName(anyInt())).thenReturn("test")
       when(c.getString(anyInt)).thenReturn("hello world")
       val marshaller = new CursorMarshaller[MyObject](c, classOf[MyObject])
       val obj = marshaller.marshall(c, classOf[MyObject])
@@ -33,7 +34,8 @@ class CursorMarshallerSpec extends TypeWriterSpec {
     "marshall float correctly" in {
       val c = mock[Cursor]
       when(c.getType(anyInt)).thenReturn(Cursor.FIELD_TYPE_FLOAT)
-      when(c.getColumnNames).thenReturn(Array("myFloat"))
+      when(c.getColumnCount).thenReturn(1)
+      when(c.getColumnName(anyInt())).thenReturn("myFloat")
       when(c.getFloat(anyInt)).thenReturn(1.0f)
       val marshaller = new CursorMarshaller[MyObject](c, classOf[MyObject])
       val obj = marshaller.marshall(c, classOf[MyObject])
@@ -43,7 +45,8 @@ class CursorMarshallerSpec extends TypeWriterSpec {
     "marshall Integer correctly" in {
       val c = mock[Cursor]
       when(c.getType(anyInt)).thenReturn(Cursor.FIELD_TYPE_INTEGER)
-      when(c.getColumnNames).thenReturn(Array("myInt"))
+      when(c.getColumnCount).thenReturn(1)
+      when(c.getColumnName(anyInt())).thenReturn("myInt")
       when(c.getInt(anyInt)).thenReturn(1)
       val marshaller = new CursorMarshaller[MyObject](c, classOf[MyObject])
       val obj = marshaller.marshall(c, classOf[MyObject])
@@ -53,7 +56,8 @@ class CursorMarshallerSpec extends TypeWriterSpec {
     "marshall long correctly" in {
       val c = mock[Cursor]
       when(c.getType(anyInt)).thenReturn(Cursor.FIELD_TYPE_INTEGER)
-      when(c.getColumnNames).thenReturn(Array("_id"))
+      when(c.getColumnCount).thenReturn(1)
+      when(c.getColumnName(anyInt())).thenReturn("_id")
       when(c.getLong(anyInt)).thenReturn(Long.MaxValue)
       val marshaller = new CursorMarshaller[MyObject](c, classOf[MyObject])
       val obj = marshaller.marshall(c, classOf[MyObject])

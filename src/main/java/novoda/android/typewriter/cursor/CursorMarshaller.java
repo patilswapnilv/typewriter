@@ -3,9 +3,7 @@ package novoda.android.typewriter.cursor;
 import android.database.Cursor;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import novoda.android.typewriter.Marshaller;
@@ -36,23 +34,21 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
         if (cursor.getPosition() < 0) {
             throw new RuntimeException("Cursor is at position below 0" + cursor.getPosition());
         }
-        T obj = null;
+        T obj;
         try {
             obj = richClass.newInstance();
-            List<String> columnNames = Arrays.asList(cursor.getColumnNames());
-            for (String column : columnNames) {
-                if (richClass.hasMethod(column)) {
-                    final int index = cursor.getColumnIndexOrThrow(column);
-                    Method setter = richClass.setter(column);
-                    int type = TYPE_INT;
-                    Class<?> t = setter.getParameterTypes()[0];
-                    if (t.equals(long.class)) {
-                        type = TYPE_LONG;
-                    } else if (t.equals(double.class)) {
-                        type = TYPE_DOUBLE;
-                    }
-                    setter.invoke(obj, getObjectFromCursor(cursor, index, type));
+
+            for (int i = 0; i < cursor.getColumnCount(); i++) {
+                String name = cursor.getColumnName(i);
+                Method setter = methodsByName.get(name);
+                int type = TYPE_INT;
+                Class<?> t = setter.getParameterTypes()[0];
+                if (t.equals(long.class)) {
+                    type = TYPE_LONG;
+                } else if (t.equals(double.class)) {
+                    type = TYPE_DOUBLE;
                 }
+                setter.invoke(obj, getObjectFromCursor(cursor, i, type));
             }
             return obj;
         } catch (Exception e) {
