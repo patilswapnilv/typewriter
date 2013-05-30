@@ -7,14 +7,12 @@ import java.util.ListIterator;
 public class CursorListIterator<T> implements ListIterator<T> {
 
     private final Cursor cur;
-    private final ReflectionCursorMarshaller<T> marshaller;
-    private final Class<T> type;
+    private final CursorMarshaller<T> marshaller;
     private final int index;
 
-    public CursorListIterator(Cursor cur, ReflectionCursorMarshaller<T> marshaller, Class<T> type, int index) {
+    public CursorListIterator(Cursor cur, CursorMarshaller<T> marshaller, int index) {
         this.cur = cur;
         this.marshaller = marshaller;
-        this.type = type;
         this.index = index;
         cur.move(index);
     }

@@ -11,13 +11,15 @@ import java.util.ListIterator;
 public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
 
     private final Cursor cursor;
-    private final Class<T> type;
-    private final ReflectionCursorMarshaller<T> marshaller;
+    private final CursorMarshaller<T> marshaller;
 
     public TypedCursor(Cursor cursor, Class<T> type) {
+        this(cursor, new ReflectionCursorMarshaller<T>(cursor, type));
+    }
+
+    public TypedCursor(Cursor cursor, CursorMarshaller<T> marhsaller) {
         this.cursor = cursor;
-        this.type = type;
-        this.marshaller = new ReflectionCursorMarshaller<T>(cursor, type);
+        this.marshaller = marhsaller;
     }
 
     @Override
@@ -53,12 +55,12 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
     @Override
     public ListIterator<T> listIterator() {
         cursor.moveToPosition(-1);
-        return new CursorListIterator<T>(cursor, marshaller, type, 0);
+        return new CursorListIterator<T>(cursor, marshaller, 0);
     }
 
     @Override
     public ListIterator<T> listIterator(int i) {
-        return new CursorListIterator<T>(cursor, marshaller, type, i);
+        return new CursorListIterator<T>(cursor, marshaller, i);
     }
 
     @Override
