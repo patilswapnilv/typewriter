@@ -35,7 +35,7 @@ public class CursorListIterator<T> implements ListIterator<T> {
     @Override
     public T next() {
         cur.move(nextIndex());
-        return marshaller.marshall(cur, type);
+        return marshaller.marshall(cur);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CursorListIterator<T> implements ListIterator<T> {
     @Override
     public T previous() {
         cur.move(previousIndex());
-        return marshaller.marshall(cur, type);
+        return marshaller.marshall(cur);
     }
 
     @Override

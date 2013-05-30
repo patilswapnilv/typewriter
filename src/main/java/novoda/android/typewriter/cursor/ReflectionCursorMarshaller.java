@@ -6,10 +6,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import novoda.android.typewriter.Marshaller;
 import novoda.android.typewriter.introspection.RichClass;
 
-public class ReflectionCursorMarshaller<T> implements Marshaller<T, Cursor> {
+public class ReflectionCursorMarshaller<T> implements CursorMarhsaller<T> {
 
     private final static int TYPE_INT = 0;
     private final static int TYPE_DOUBLE = 1;
@@ -30,7 +29,7 @@ public class ReflectionCursorMarshaller<T> implements Marshaller<T, Cursor> {
     }
 
     @Override
-    public T marshall(Cursor cursor, Class<T> what) {
+    public T marshall(Cursor cursor) {
         if (cursor.getPosition() < 0) {
             throw new RuntimeException("Cursor is at position below 0" + cursor.getPosition());
         }
