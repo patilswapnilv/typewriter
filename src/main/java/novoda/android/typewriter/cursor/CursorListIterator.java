@@ -56,16 +56,16 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("no modification support");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void set(T t) {
-        throw new UnsupportedOperationException("no modification support");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void add(T t) {
-        throw new UnsupportedOperationException("no modification support");
+        throw new UnsupportedOperationException();
     }
 }

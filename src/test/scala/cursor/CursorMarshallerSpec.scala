@@ -16,7 +16,7 @@ class CursorMarshallerSpec extends TypeWriterSpec {
       when(c.getPosition).thenReturn(-1)
       val marshaller = new ReflectionCursorMarshaller[MyObject](c, classOf[MyObject])
       evaluating {
-        marshaller.marshall(c, classOf[MyObject])
+        marshaller.marshall(c)
       } should produce[RuntimeException]
     }
 
@@ -27,7 +27,7 @@ class CursorMarshallerSpec extends TypeWriterSpec {
       when(c.getColumnName(anyInt())).thenReturn("test")
       when(c.getString(anyInt)).thenReturn("hello world")
       val marshaller = new ReflectionCursorMarshaller[MyObject](c, classOf[MyObject])
-      val obj = marshaller.marshall(c, classOf[MyObject])
+      val obj = marshaller.marshall(c)
       obj.test should be("hello world")
     }
 
@@ -38,7 +38,7 @@ class CursorMarshallerSpec extends TypeWriterSpec {
       when(c.getColumnName(anyInt())).thenReturn("myFloat")
       when(c.getFloat(anyInt)).thenReturn(1.0f)
       val marshaller = new ReflectionCursorMarshaller[MyObject](c, classOf[MyObject])
-      val obj = marshaller.marshall(c, classOf[MyObject])
+      val obj = marshaller.marshall(c)
       obj.myFloat should be(1.0f)
     }
 
@@ -49,7 +49,7 @@ class CursorMarshallerSpec extends TypeWriterSpec {
       when(c.getColumnName(anyInt())).thenReturn("myInt")
       when(c.getInt(anyInt)).thenReturn(1)
       val marshaller = new ReflectionCursorMarshaller[MyObject](c, classOf[MyObject])
-      val obj = marshaller.marshall(c, classOf[MyObject])
+      val obj = marshaller.marshall(c)
       obj.myInt should be(1)
     }
 
@@ -60,7 +60,7 @@ class CursorMarshallerSpec extends TypeWriterSpec {
       when(c.getColumnName(anyInt())).thenReturn("_id")
       when(c.getLong(anyInt)).thenReturn(Long.MaxValue)
       val marshaller = new ReflectionCursorMarshaller[MyObject](c, classOf[MyObject])
-      val obj = marshaller.marshall(c, classOf[MyObject])
+      val obj = marshaller.marshall(c)
       obj.id should be(Long.MaxValue)
     }
 
