@@ -35,21 +35,6 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
     }
 
     @Override
-    public List<T> subList(int i, int i1) {
-        return null;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T> T[] toArray(T[] ts) {
-        return null;
-    }
-
-    @Override
     public boolean isEmpty() {
         return cursor.getCount() == 0;
     }
@@ -90,77 +75,91 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
 
     @Override
     public void remove() {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void clear() {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
-
 
     @Override
     public T set(int index, T element) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void add(int index, T element) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean add(T t) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public T remove(int index) {
-        throw new RuntimeException("Modification Operations not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int indexOf(Object o) {
-        throw new RuntimeException("not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        throw new RuntimeException("not supported");
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean contains(Object o) {
-        throw new RuntimeException("Not implemented");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<T> subList(int i, int i1) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object[] toArray() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <T> T[] toArray(T[] ts) {
+        throw new UnsupportedOperationException();
     }
 }
