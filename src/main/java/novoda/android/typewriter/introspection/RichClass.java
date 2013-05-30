@@ -41,7 +41,7 @@ public class RichClass<T> {
         }
     }
 
-    public Method setter(String what) throws NoSuchMethodException {
+    public Method setter(String what) {
         if (methodMapper.containsKey(what)) {
             return methodMapper.get(what);
         }
@@ -55,7 +55,7 @@ public class RichClass<T> {
                 return m;
             }
         }
-        throw new NoSuchMethodException("can not find method " + what + " " + fieldMapper);
+        throw new RichClassException("can not find method " + what + " " + fieldMapper);
     }
 
     public boolean hasMethod(String method) {
@@ -71,6 +71,12 @@ public class RichClass<T> {
             return klass.newInstance();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    public static class RichClassException extends RuntimeException {
+        public RichClassException(String reason) {
+            super(reason);
         }
     }
 }

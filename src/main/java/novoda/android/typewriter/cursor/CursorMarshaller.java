@@ -4,7 +4,9 @@ import android.database.Cursor;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import novoda.android.typewriter.Marshaller;
 import novoda.android.typewriter.introspection.RichClass;
@@ -16,9 +18,17 @@ public class CursorMarshaller<T> implements Marshaller<T, Cursor> {
     private final static int TYPE_LONG = 2;
 
     private final RichClass<T> richClass;
+    private final Map<String, Method> methodsByName = new HashMap<String, Method>();
 
     public CursorMarshaller(Cursor cursor, Class<T> classType) {
         richClass = new RichClass<T>(classType);
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            String name = cursor.getColumnName(i);
+            if (richClass.hasMethod(name)) {
+                Method setter = richClass.setter(name);
+                methodsByName.put(name, setter);
+            }
+        }
     }
 
     @Override

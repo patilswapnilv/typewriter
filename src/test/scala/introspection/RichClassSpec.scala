@@ -6,6 +6,7 @@ import novoda.android.typewriter.introspection.RichClass
 import novoda.android.typewriter.annotation.Mapper
 import novoda.android.typewriter.cursor.MyObject
 import org.scalatest.matchers._
+import novoda.android.typewriter.introspection.RichClass.RichClassException
 
 trait RichClassMatcher {
 
@@ -46,7 +47,7 @@ class RichClassSpec extends WordSpec with ShouldMatchers with RichClassMatcher {
     "throw an exception if getMethod not found" in {
       evaluating(
         new RichClass(classOf[TestObject]).setter("name_not_found")
-      ) should produce[NoSuchMethodException]
+      ) should produce[RichClassException]
     }
 
     "find correct type setter" in {
