@@ -17,9 +17,9 @@ public class TypedCursor<T> implements ListCursor<T>, Closeable {
         this(cursor, new ReflectionCursorMarshaller<T>(cursor, type));
     }
 
-    public TypedCursor(Cursor cursor, CursorMarshaller<T> marhsaller) {
+    public TypedCursor(Cursor cursor, CursorMarshaller<T> marshaller) {
         this.cursor = cursor;
-        this.marshaller = marhsaller;
+        this.marshaller = marshaller;
     }
 
     @Override

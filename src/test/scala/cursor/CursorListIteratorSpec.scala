@@ -76,9 +76,9 @@ class CursorListIteratorSpec extends TypeWriterSpec {
     }
 
     object CursorListIterator {
-      def apply(cursor: Cursor) = new CursorListIterator[Object](cursor, null, null, 0)
+      def apply(cursor: Cursor) = new CursorListIterator[Object](cursor, null, 0)
 
-      def apply(cursor: Cursor, index: Int) = new CursorListIterator(cursor, null, null, index)
+      def apply(cursor: Cursor, index: Int) = new CursorListIterator(cursor, null, index)
     }
   }
 }

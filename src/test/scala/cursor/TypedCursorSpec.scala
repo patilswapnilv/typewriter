@@ -25,29 +25,6 @@ class TypedCursorSpec extends TypeWriterSpec {
       TypedCursor(cursor).size should be(5)
     }
 
-    "have next" in {
-      val cursor = mock[Cursor]
-      when(cursor.getCount).thenReturn(5)
-      when(cursor.getColumnNames).thenReturn(List("test").toArray)
-      TypedCursor(cursor).hasNext should be(true)
-    }
-
-    "not have next" in {
-      val cursor = mock[Cursor]
-      when(cursor.getCount).thenReturn(0)
-      when(cursor.getColumnNames).thenReturn(List("test").toArray)
-      TypedCursor(cursor).hasNext should be(false)
-    }
-
-    "iterate correctly" in pendingUntilFixed {
-      val cursor = mock[Cursor]
-      when(cursor.getCount).thenReturn(2)
-      when(cursor.getColumnNames).thenReturn(List("test").toArray)
-      when(cursor.getString(anyInt)).thenReturn("value test")
-      val tc = TypedCursor(cursor)
-      tc.next().test should be("value test")
-    }
-
     "modifiable methods" should {
       "throw an exception" in {
         val c = mock[Cursor]
