@@ -22,9 +22,7 @@ public class TypedCursor<T> implements ListCursor<T>, Iterator<T>, Closeable {
 
     @Override
     public void close() {
-        if (cursor != null) {
-            cursor.close();
-        }
+        cursor.close();
     }
 
     public Cursor getCursor() {
