@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
 import novoda.android.typewriter.content.TypedResolver;
-import novoda.android.typewriter.cursor.ListCursor;
 
 public class TypedElementLoader<T> extends AsyncTaskLoader<T> {
 
