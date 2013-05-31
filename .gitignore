@@ -18,9 +18,9 @@ local.properties
 .idea_modules/
 target/
 project/boot/
-*.jar
 *.iml
 .gradle
 *.ipr
 *.iws
 build/
+tmp/
