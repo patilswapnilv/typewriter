@@ -158,6 +158,7 @@ fi
 function splitJvmOpts() {
     JVM_OPTS=("$@")
 }
+GRADLE_OPTS="$GRADLE_OPTS -Xms512m -Xmx2048m -XX:PermSize=512m -XX:MaxPermSize=1024m" 
 eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
 JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
 
