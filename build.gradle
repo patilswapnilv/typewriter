@@ -1,9 +1,40 @@
+apply plugin: 'maven'
 apply plugin: 'scala'
 apply plugin: 'idea'
+
+group = 'com.novoda'
+version = '0.0.3'
+ext.packaging = 'jar'
+
+def isDevBuild
+def isCiBuild
+def isReleaseBuild
+
+def sonatypeRepositoryUrl
+
+if(hasProperty("release")) {
+    isReleaseBuild = true
+    sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+} else if (hasProperty("ci")) {
+    isCiBuild = true
+    version += "-SNAPSHOT"
+    sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+} else {
+    isDevBuild = true
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '1.6'
+}
 
 repositories {
     mavenCentral()
 }
+
+artifacts {
+    archives jar
+}
+
 
 dependencies {
     compile 'com.google.android:android:4.0.1.2'
@@ -29,5 +60,57 @@ task test(overwrite: true, dependsOn: compileTestScala) << {
     ) {
         println sourceSets.test.output.classesDir
         reporter(type: 'stderr')
+    }
+}
+
+uploadArchives {
+    repositories {
+        if (isDevBuild) {
+            mavenLocal()
+        }
+        else {
+            mavenDeployer {
+
+                if(isReleaseBuild) {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                }
+
+                repository(url: sonatypeRepositoryUrl) {
+                  authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
+
+                pom.project {
+                   name 'typewriter'
+                   packaging 'jar'
+                   description 'Minimal ORM for android'
+                   url 'http://github.com/novoda/typewriter'
+
+                   scm {
+                       url 'scm:git@github.com:novoda/typewriter.git'
+                       connection 'scm:git@github.com:novoda/typewriter.git'
+                       developerConnection 'scm:git@github.com:novoda/typewriter.git'
+                   }
+
+                   licenses {
+                       license {
+                           name 'The Apache Software License, Version 2.0'
+                           url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                           distribution 'repo'
+                       }
+                   }
+
+                   developers {
+                       developer {
+                           id 'charroch'
+                           name 'Carl-Gustaf Harroch'
+                       }
+                       developer {
+                            id 'frankiesardo'
+                            name 'Frankie Sardo'
+                       }
+                   }
+               }
+            }
+        }
     }
 }
