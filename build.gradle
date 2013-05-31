@@ -47,7 +47,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.10'
 }
 
-    jvmArgs += [ "-XX:MaxPermSize=512m" ]
 task test(overwrite: true, dependsOn: compileTestScala) << {
     ant.taskdef(
             name: 'scalatest',
