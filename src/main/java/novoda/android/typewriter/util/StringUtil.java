@@ -50,10 +50,10 @@ public class StringUtil {
     }
 
     public static String asCamelifyGetMethod(String original) {
-        return new StringBuilder(GET).append(camelify(original)).toString();
+        return GET + camelify(original);
     }
 
     public static String asCamelifySetMethod(String original) {
-        return new StringBuilder(SET).append(camelify(original)).toString();
+        return SET + camelify(original);
     }
 }
