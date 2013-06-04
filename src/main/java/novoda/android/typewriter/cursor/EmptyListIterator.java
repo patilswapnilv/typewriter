@@ -2,7 +2,7 @@ package novoda.android.typewriter.cursor;
 
 import java.util.ListIterator;
 
-public class EmptyListIterator<T> implements ListIterator<T> {
+class EmptyListIterator<T> implements ListIterator<T> {
 
     @Override
     public boolean hasNext() {

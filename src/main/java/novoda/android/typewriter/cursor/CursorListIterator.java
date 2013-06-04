@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 import java.util.ListIterator;
 
-public class CursorListIterator<T> implements ListIterator<T> {
+class CursorListIterator<T> implements ListIterator<T> {
 
     private final Cursor cur;
     private final CursorMarshaller<T> marshaller;
