@@ -6,49 +6,46 @@ import java.util.ListIterator;
 
 public class CursorListIterator<T> implements ListIterator<T> {
 
-    private final Cursor cur;
+    private final Cursor cursor;
     private final CursorMarshaller<T> marshaller;
-    private final int index;
+    private int index;
 
-    public CursorListIterator(Cursor cur, CursorMarshaller<T> marshaller, int index) {
-        this.cur = cur;
+    public CursorListIterator(Cursor cursor, CursorMarshaller<T> marshaller, int index) {
+        this.cursor = cursor;
         this.marshaller = marshaller;
         this.index = index;
     }
 
     @Override
     public boolean hasNext() {
-        final int currentPosition = cur.getPosition();
-        final int size = cur.getCount();
-        return (currentPosition + 1) < size;
+        return index < cursor.getCount();
     }
 
     @Override
     public boolean hasPrevious() {
-        if (cur.getPosition() <= index) return false;
-        return cur.getPosition() > 0;
+        return index > 0;
     }
 
     @Override
     public T next() {
-        cur.move(nextIndex());
-        return marshaller.marshall(cur);
+        cursor.moveToPosition(index++);
+        return marshaller.marshall(cursor);
     }
 
     @Override
     public int nextIndex() {
-        return cur.getPosition() + 1;
+        return index + 1;
     }
 
     @Override
     public T previous() {
-        cur.move(previousIndex());
-        return marshaller.marshall(cur);
+        cursor.moveToPosition(--index);
+        return marshaller.marshall(cursor);
     }
 
     @Override
     public int previousIndex() {
-        return cur.getPosition() - 1;
+        return index - 1;
     }
 
     @Override
