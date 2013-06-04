@@ -2,10 +2,10 @@ package cursor
 
 import android.database.Cursor
 import org.mockito.Mockito._
-import novoda.android.typewriter.cursor.CursorListIterator
 import novoda.android.typewriter.TypeWriterSpec
 
 class CursorListIteratorSpec extends TypeWriterSpec {
+
   "A cursor list iterator" should {
 
     "ensure it can iterate if position is within size with hasNext" in {
@@ -75,10 +75,5 @@ class CursorListIteratorSpec extends TypeWriterSpec {
       ) should produce[RuntimeException]
     }
 
-    object CursorListIterator {
-      def apply(cursor: Cursor) = new CursorListIterator[Object](cursor, null, 0)
-
-      def apply(cursor: Cursor, index: Int) = new CursorListIterator(cursor, null, index)
-    }
   }
 }

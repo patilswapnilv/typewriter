@@ -17,8 +17,12 @@ class TypedResolverSpec extends TypeWriterSpec {
       val cr = mock[ContentResolver]
       val cursor = mock[Cursor]
       val tr = new TypedResolver(cr)
+
+      when(cursor.moveToPosition( anyInt())) thenReturn true
+
       when(cr.query(any(classOf[Uri]), any(classOf[Array[String]]), anyString, any(classOf[Array[String]]), anyString)).thenReturn(cursor)
       when(cursor.getColumnNames).thenReturn(new Array[String](0))
+
       tr.get(Uri.parse("content://someuri"), classOf[MyObject])
       verify(cursor).moveToPosition(0)
     }
