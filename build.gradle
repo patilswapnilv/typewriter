@@ -2,6 +2,9 @@ apply plugin: 'maven'
 apply plugin: 'scala'
 apply plugin: 'idea'
 
+targetCompatibility = 1.6
+sourceCompatibility = 1.6
+
 group = 'com.novoda'
 version = '0.0.3'
 ext.packaging = 'jar'
@@ -12,9 +15,6 @@ def isReleaseBuild
 
 def sonatypeRepositoryUrl
 
-
-//targetCompatibility = 1.6
-//sourceCompatibility = 1.6
 
 if (hasProperty("release")) {
     isReleaseBuild = true
