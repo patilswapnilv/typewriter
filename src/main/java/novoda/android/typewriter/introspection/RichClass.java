@@ -14,11 +14,11 @@ public class RichClass<T> {
 
     private final Class<T> klass;
 
-    private List<Method> methods;
+    private final List<Method> methods;
 
-    private Map<String, String> fieldMapper;
+    private final Map<String, String> fieldMapper;
 
-    private Map<String, Method> methodMapper;
+    private final Map<String, Method> methodMapper;
 
     public RichClass(Class<T> klass) {
         this.klass = klass;
