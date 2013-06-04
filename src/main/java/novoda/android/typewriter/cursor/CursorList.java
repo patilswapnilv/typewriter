@@ -29,12 +29,15 @@ public class CursorList<T> implements List<T>, Closeable {
 
     @Override
     public int size() {
+        if (cursor.isClosed()) {
+            return 0;
+        }
         return cursor.getCount();
     }
 
     @Override
     public boolean isEmpty() {
-        return cursor.getCount() == 0;
+        return size() == 0;
     }
 
     @Override

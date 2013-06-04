@@ -19,6 +19,9 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public boolean hasNext() {
+        if (cur.isClosed()) {
+            return false;
+        }
         final int currentPosition = cur.getPosition();
         final int size = cur.getCount();
         return (currentPosition + 1) < size;
@@ -26,6 +29,9 @@ public class CursorListIterator<T> implements ListIterator<T> {
 
     @Override
     public boolean hasPrevious() {
+        if (cur.isClosed()) {
+            return false;
+        }
         if (cur.getPosition() <= index) return false;
         return cur.getPosition() > 0;
     }
