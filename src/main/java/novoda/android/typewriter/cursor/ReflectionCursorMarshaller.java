@@ -8,7 +8,7 @@ import java.util.Map;
 
 import novoda.android.typewriter.introspection.RichClass;
 
-class ReflectionCursorMarshaller<T> implements CursorMarshaller<T> {
+public class ReflectionCursorMarshaller<T> implements CursorMarshaller<T> {
 
     private final static int TYPE_INT = 0;
     private final static int TYPE_DOUBLE = 1;
