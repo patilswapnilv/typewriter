@@ -5,7 +5,6 @@ import android.database.Cursor
 import novoda.android.typewriter.cursor.{MyObject, CursorList}
 
 import org.mockito.Mockito._
-import org.mockito.Matchers._
 
 class TypedCursorSpec extends TypeWriterSpec {
 
@@ -29,7 +28,7 @@ class TypedCursorSpec extends TypeWriterSpec {
       "throw an exception" in {
         val c = mock[Cursor]
         when(c.getColumnNames).thenReturn(List("one").toArray)
-        val tc = new CursorList(c, classOf[MyObject]);
+        val tc = new CursorList(c, classOf[MyObject])
 
         evaluating(tc.add(null)) should produce[RuntimeException]
         evaluating(tc.add(-1, null)) should produce[RuntimeException]

@@ -1,12 +1,12 @@
 package introspection
 
 import org.scalatest.WordSpec
-import scala.reflect.BeanProperty
 import novoda.android.typewriter.introspection.RichClass
 import novoda.android.typewriter.annotation.Mapper
 import novoda.android.typewriter.cursor.MyObject
 import org.scalatest.matchers._
 import novoda.android.typewriter.introspection.RichClass.RichClassException
+import scala.beans.BeanProperty
 
 trait RichClassMatcher {
 
@@ -65,7 +65,7 @@ class RichClassSpec extends WordSpec with ShouldMatchers with RichClassMatcher {
 
     "have the getMethod" in {
       List("name_camel_case", "name", "id", "short", "long", "float", "some_value").foreach(
-        (name) => new RichClass(classOf[TestObject]) should have (method(name))
+        (name) => new RichClass(classOf[TestObject]) should have(method(name))
       )
     }
 

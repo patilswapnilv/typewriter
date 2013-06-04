@@ -16,7 +16,7 @@ trait RoboSpecs extends BeforeAndAfterEach with OneInstancePerTest {
   this: Suite =>
 
   override def beforeEach() {
-    setupApplicationState
+    setupApplicationState()
     super.beforeEach()
   }
 
@@ -45,7 +45,7 @@ object R {
 object RoboSpecs {
 
   lazy val tmpDir = {
-    val f = new File(System.getProperty("java.io.tmpdir"));
+    val f = new File(System.getProperty("java.io.tmpdir"))
     f.mkdirs()
     f
   }
