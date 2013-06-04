@@ -42,18 +42,27 @@ public class CursorList<T> implements List<T>, Closeable {
 
     @Override
     public Iterator<T> iterator() {
+        if (cursor.isClosed()) {
+            return new EmptyListIterator<T>();
+        }
         cursor.moveToPosition(-1);
         return new CursorListIterator<T>(cursor, marshaller, 0);
     }
 
     @Override
     public ListIterator<T> listIterator() {
+        if (cursor.isClosed()) {
+            return new EmptyListIterator<T>();
+        }
         cursor.moveToPosition(-1);
         return new CursorListIterator<T>(cursor, marshaller, 0);
     }
 
     @Override
     public ListIterator<T> listIterator(int i) {
+        if (cursor.isClosed()) {
+            return new EmptyListIterator<T>();
+        }
         return new CursorListIterator<T>(cursor, marshaller, i);
     }
 
