@@ -12,7 +12,11 @@ def isReleaseBuild
 
 def sonatypeRepositoryUrl
 
-if(hasProperty("release")) {
+
+targetCompatibility = 1.6
+sourceCompatibility = 1.6
+
+if (hasProperty("release")) {
     isReleaseBuild = true
     sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 } else if (hasProperty("ci")) {
@@ -24,7 +28,7 @@ if(hasProperty("release")) {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '1.6'
+    gradleVersion = '1.6'
 }
 
 repositories {
@@ -51,7 +55,7 @@ task test(overwrite: true, dependsOn: compileTestScala) << {
     ant.taskdef(
             name: 'scalatest',
             classname: 'org.scalatest.tools.ScalaTestAntTask',
-            classpath: configurations.testRuntime.asPath + ':' + compileScala.destinationDir  + ":" + compileTestScala.destinationDir
+            classpath: configurations.testRuntime.asPath + ':' + compileScala.destinationDir + ":" + compileTestScala.destinationDir
     )
     ant.scalatest(
             runpath: sourceSets.test.output.classesDir,
@@ -67,49 +71,48 @@ uploadArchives {
     repositories {
         if (isDevBuild) {
             mavenLocal()
-        }
-        else {
+        } else {
             mavenDeployer {
 
-                if(isReleaseBuild) {
+                if (isReleaseBuild) {
                     beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
                 }
 
                 repository(url: sonatypeRepositoryUrl) {
-                  authentication(userName: sonatypeUsername, password: sonatypePassword)
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
                 }
 
                 pom.project {
-                   name 'typewriter'
-                   packaging 'jar'
-                   description 'Minimal ORM for android'
-                   url 'http://github.com/novoda/typewriter'
+                    name 'typewriter'
+                    packaging 'jar'
+                    description 'Minimal ORM for android'
+                    url 'http://github.com/novoda/typewriter'
 
-                   scm {
-                       url 'scm:git@github.com:novoda/typewriter.git'
-                       connection 'scm:git@github.com:novoda/typewriter.git'
-                       developerConnection 'scm:git@github.com:novoda/typewriter.git'
-                   }
+                    scm {
+                        url 'scm:git@github.com:novoda/typewriter.git'
+                        connection 'scm:git@github.com:novoda/typewriter.git'
+                        developerConnection 'scm:git@github.com:novoda/typewriter.git'
+                    }
 
-                   licenses {
-                       license {
-                           name 'The Apache Software License, Version 2.0'
-                           url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                           distribution 'repo'
-                       }
-                   }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
 
-                   developers {
-                       developer {
-                           id 'charroch'
-                           name 'Carl-Gustaf Harroch'
-                       }
-                       developer {
+                    developers {
+                        developer {
+                            id 'charroch'
+                            name 'Carl-Gustaf Harroch'
+                        }
+                        developer {
                             id 'frankiesardo'
                             name 'Frankie Sardo'
-                       }
-                   }
-               }
+                        }
+                    }
+                }
             }
         }
     }
